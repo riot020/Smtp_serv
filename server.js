@@ -1,4 +1,5 @@
 require('dotenv').config({ path: '.env' });
+const cors = require("cors");
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
@@ -8,7 +9,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Allow all origins — you can restrict to specific domains later
-app.use(cors({ origin: "*" }));
+app.use(cors()); // <-- This allows all origins by default
+app.options("*", cors()); // <-- This handles preflight requests (OPTIONS) globally
+
 app.use(bodyParser.json());
 
 app.post("/send-email", async (req, res) => {
